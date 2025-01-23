@@ -1,7 +1,7 @@
 -- Solution Configuration
 workspace "ChatbotSolution"
     configurations { "Debug", "Release" }
-    platforms { "x64" } -- Ensure we are targeting x64
+    platforms { "Any CPU" }
 
     -- Global settings
     filter "configurations:Debug"
@@ -14,45 +14,41 @@ workspace "ChatbotSolution"
 
     filter {}
 
--- C# Frontend Project
-project "ChatbotFrontend"
-    kind "WindowedApp"
-    language "C#"
-    dotnetframework "net8.0"
-    location "ChatbotFrontend"
-    architecture "x64"
-
-    files { "ChatbotFrontend/**.cs" }
-    links { "ChatbotCore" }
-
-    filter "platforms:x64"
-        architecture "x64"
-
-    -- Post-build command to copy the DLL from ChatbotCore to the frontend's directory
-    postbuildcommands {
-        "{COPY} ../bin/%{cfg.buildcfg}/%{cfg.platform}/ChatbotCore.dll %{cfg.targetdir}"
-    }
-
-    filter {}
-
 -- C++ Backend Project
 project "ChatbotCore"
-    kind "SharedLib" -- Compiling the backend as a DLL
+    kind "SharedLib"
     language "C++"
     cppdialect "C++20"
-    targetdir "bin/%{cfg.buildcfg}/%{cfg.platform}" -- DLL output directory, same as frontend
-    objdir "bin-int/%{cfg.buildcfg}/%{cfg.platform}" -- Intermediate directory
+    targetdir "bin/%{cfg.buildcfg}/x64"
+    objdir "bin-int/%{cfg.buildcfg}/x64"
     location "ChatbotCore"
-    architecture "x64"
-
 
     files { "ChatbotCore/**.h", "ChatbotCore/**.cpp" }
     includedirs { "ChatbotCore/include" }
 
     filter "system:windows"
         systemversion "latest"
-    filter "platforms:x64"
-        architecture "x64"
+        architecture "x86_64"
 
     filter {}
 
+-- C# Frontend Project
+project "ChatbotFrontend"
+    kind "WindowedApp"
+    language "C#"
+    dotnetframework "net8.0"
+    targetdir "bin/%{cfg.buildcfg}/x64"
+    objdir "bin-int/%{cfg.buildcfg}/x64"
+    location "ChatbotFrontend"
+
+    files { "ChatbotFrontend/**.cs" }
+
+    -- Avoid generating duplicate AssemblyInfo attributes
+    clr "Off"
+
+    postbuildcommands {
+        -- Copy the C++ backend DLL to the C# output directory for dynamic linking
+        "{COPY} %{wks.location}bin/%{cfg.buildcfg}/x64/ChatbotCore.dll %{wks.location}bin/%{cfg.buildcfg}/x64/net8.0"
+    }
+
+    filter {}
