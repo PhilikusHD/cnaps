@@ -24,7 +24,7 @@ project "ChatbotCore"
     location "ChatbotCore"
 
     files { "ChatbotCore/**.h", "ChatbotCore/**.cpp" }
-    includedirs { "ChatbotCore/include" }
+    includedirs { "ChatbotCore/src" }
 
     filter "system:windows"
         systemversion "latest"

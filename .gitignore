@@ -80,3 +80,5 @@ bin/
 bin-int/
 *.csproj
 *.vcxproj
+*.filters
+*.user

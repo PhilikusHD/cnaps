@@ -27,13 +27,8 @@ namespace ChatbotFrontend
             InitializeComponent();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void SendMessage_Click(object sender, RoutedEventArgs e)
         {
-            // Call the C++ function
-            nint greetingPtr = GetGreeting();
-            // Convert the C++ string to a C# string
-            string greeting = Marshal.PtrToStringAnsi(greetingPtr);
-            MessageBox.Show(greeting);
         }
 
         private void ChatLog_SelectionChanged(object sender, SelectionChangedEventArgs e)
