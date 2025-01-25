@@ -35,5 +35,10 @@ namespace ChatbotFrontend
             string greeting = Marshal.PtrToStringAnsi(greetingPtr);
             MessageBox.Show(greeting);
         }
+
+        private void ChatLog_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }
