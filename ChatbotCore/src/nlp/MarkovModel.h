@@ -17,11 +17,11 @@ namespace Ravi
 	private:
 		size_t m_NGrams;
 		Tokenizer m_Tokenizer;
-		std::map<std::vector<std::string>, std::map<std::string, int>> m_BotMarkov;
+		std::map<std::vector<std::string>, std::map<std::string, float>> m_BotMarkov;
 
-		void TrainOnTokens(const std::vector<std::string>& tokens, std::map<std::vector<std::string>, std::map<std::string, int>>& markovModel) const;
-		std::vector<std::string> GenerateFromMarkov(const std::vector<std::string>& userInput, const std::map<std::vector<std::string>, std::map<std::string, int>>& markovModel);
-		std::string ChooseNextTokenFromProbabilities(const std::map<std::string, int>& transitions);
-		std::string ChooseNextToken(const std::map<std::string, int>& transitions);
+		void TrainOnTokens(const std::vector<std::string>& tokens, std::map<std::vector<std::string>, std::map<std::string, float>>& markovModel) const;
+		std::vector<std::string> GenerateFromMarkov(const std::vector<std::string>& userInput, const std::map<std::vector<std::string>, std::map<std::string, float>>& markovModel);
+		std::string ChooseNextTokenFromProbabilities(const std::map<std::string, float>& transitions);
+		bool IsSubjectOrVerb(const std::string& token);
 	};
 }

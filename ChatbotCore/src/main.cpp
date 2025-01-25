@@ -12,7 +12,7 @@ int main()
 	std::cout << std::filesystem::current_path() << std::endl;
 
 	Tokenizer tokenizer;
-	MarkovModel bot(3);
+	MarkovModel bot(5);
 
 	CorpusLoader loader("sample_conversation.txt", &tokenizer);
 	auto dialogues = loader.LoadAndTokenize();

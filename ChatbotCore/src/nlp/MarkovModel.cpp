@@ -42,9 +42,8 @@ namespace Ravi
 		return Utils::JoinTokens(response);
 	}
 
-	void MarkovModel::TrainOnTokens(const std::vector<std::string>& tokens, std::map<std::vector<std::string>, std::map<std::string, int>>& markovModel) const
+	void MarkovModel::TrainOnTokens(const std::vector<std::string>& tokens, std::map<std::vector<std::string>, std::map<std::string, float>>& markovModel) const
 	{
-		// Check if there are enough tokens in the vector
 		if (tokens.size() >= m_NGrams + 1)
 		{
 			for (size_t i = 0; i < tokens.size() - m_NGrams; ++i)
@@ -52,122 +51,153 @@ namespace Ravi
 				std::vector<std::string> state(tokens.begin() + i, tokens.begin() + i + m_NGrams);
 				std::string nextToken = tokens[i + m_NGrams];
 
-				markovModel[state][nextToken]++;
+				markovModel[state].insert_or_assign(nextToken, markovModel[state][nextToken] + 1);
 			}
 		}
 		else
 		{
-			// Handle the case where there are not enough tokens for m_NGrams + 1
 			std::cout << "Not enough tokens to build the model." << std::endl;
+		}
+
+		// Normalize the transitions to probabilities
+		for (auto& state : markovModel)
+		{
+			int totalFrequency = 0;
+			// Calculate the total frequency for normalization
+			for (auto& transition : state.second)
+			{
+				totalFrequency += transition.second;
+			}
+
+			// Normalize to probabilities
+			if (totalFrequency > 0)
+			{
+				for (auto& transition : state.second)
+				{
+					transition.second = static_cast<float>(transition.second) / totalFrequency;
+				}
+			}
 		}
 	}
 
 	std::vector<std::string> MarkovModel::GenerateFromMarkov(
 		const std::vector<std::string>& userInput,
-		const std::map<std::vector<std::string>, std::map<std::string, int>>& markovModel)
+		const std::map<std::vector<std::string>, std::map<std::string, float>>& markovModel)
 	{
 		std::vector<std::string> response;
 
-		// Choose a context size dynamically based on the user input
-		size_t contextSize = std::min(userInput.size(), m_NGrams); // Allow flexibility in context size
+		size_t contextSize = std::min(userInput.size(), m_NGrams);
 		std::vector<std::string> state(userInput.end() - contextSize, userInput.end());
 
-		// Debugging: print the state vector to check its content
-		std::cout << "Initial State: ";
-		for (const auto& token : state)
-		{
-			std::cout << token << " ";
-		}
-		std::cout << std::endl;
-
-		// Limit response length to avoid endless generation
 		for (size_t i = 0; i < 25; ++i)
 		{
-			// Look for the next possible state based on context
 			auto it = markovModel.lower_bound(state);
-			if (it != markovModel.end())
+			if (it == markovModel.end() || it->second.empty())
 			{
-				auto& transitions = it->second;
-				std::string nextToken = ChooseNextTokenFromProbabilities(transitions);
+				break; // Exit if no valid transition is found
+			}
 
-				// Apply some rules to prevent nonsensical sentence structure
-				if (i == 0 && (nextToken == "the" || nextToken == "and" || nextToken == "to"))
-				{
-					continue;  // Avoid starting with filler words
-				}
+			auto& transitions = it->second;
+			std::string nextToken = ChooseNextTokenFromProbabilities(transitions);
 
-				// Enforce minimal sentence structure:
-				if (i == 0 && !response.empty() && (response.back() == "to" || response.back() == "and"))
-				{
-					continue; // Avoid starting new sentences with prepositions
-				}
-
-				// Avoid repetitive phrases
-				if (!response.empty() && nextToken == response.back())
+			// Enforce grammar rules:
+			if (i == 0)
+			{
+				// Avoid starting with filler words like "the", "and"
+				if (nextToken == "the" || nextToken == "and" || nextToken == "but")
 				{
 					continue;
 				}
 
-				response.emplace_back(nextToken);
+				// Make sure we start with a subject or verb
+				if (IsSubjectOrVerb(nextToken) == false)
+				{
+					continue;
+				}
+			}
 
-				// Update the state for the next token generation
-				state.emplace_back(nextToken);
-				state.erase(state.begin()); // Maintain fixed size context window
-			}
-			else
+			// Prevent consecutive repetitions
+			if (!response.empty() && nextToken == response.back())
 			{
-				std::cout << "No valid transition found, breaking loop." << std::endl;
-				break; // Exit if no valid transition is found
+				continue;
 			}
+
+			// Enforce minimal sentence structure:
+			if (i == 0 && !response.empty() && (response.back() == "to" || response.back() == "and"))
+			{
+				continue; // Avoid starting new sentences with prepositions
+			}
+
+			// Ensure sentence ends with punctuation
+			if (i == 24)
+			{
+				if (nextToken != "." && nextToken != "!" && nextToken != "?")
+				{
+					nextToken += "."; // Add period at the end if necessary
+				}
+			}
+
+			response.push_back(nextToken);
+
+			// Update the state for the next token generation
+			state.push_back(nextToken);
+			state.erase(state.begin()); // Maintain fixed size context window
 		}
 
 		return response;
 	}
 
 
+
 	std::string MarkovModel::ChooseNextTokenFromProbabilities(
-		const std::map<std::string, int>& transitions)
+		const std::map<std::string, float>& transitions)
 	{
-		// Compute the total frequency of transitions
-		int totalFrequency = 0;
+		// Compute total probability (sum of weights, which are now probabilities)
+		float totalProbability = 0.0f;
 		for (const auto& transition : transitions)
 		{
-			totalFrequency += transition.second;
+			if (transition.second < 0)
+			{
+				std::cout << "Warning: Negative probability detected for token " << transition.first << std::endl;
+			}
 		}
-
-		// Select a random number between 0 and totalFrequency
-		std::uniform_int_distribution<int> dist(0, totalFrequency - 1);
+		// Select based on weighted probability
+		std::uniform_real_distribution<float> dist(0.0f, totalProbability);
 		std::random_device rd;
 		std::mt19937 gen(rd());
-		int randomChoice = dist(gen);
+		float randomChoice = dist(gen);
 
-		// Iterate over the transitions and find the token that corresponds to the random choice
-		int cumulativeFrequency = 0;
+		// Iterate over transitions and find the token corresponding to the random choice
+		float cumulativeProbability = 0.0f;
 		for (const auto& transition : transitions)
 		{
-			cumulativeFrequency += transition.second;
-			if (randomChoice < cumulativeFrequency)
+			cumulativeProbability += transition.second;
+			if (randomChoice < cumulativeProbability)
 			{
-				return transition.first; // Return the chosen token
+				return transition.first;
 			}
 		}
 
-		return ""; // Default return if something goes wrong
+		return " "; // Default return if something goes wrong
 	}
 
-
-	std::string MarkovModel::ChooseNextToken(const std::map<std::string, int>& transitions)
+	bool MarkovModel::IsSubjectOrVerb(const std::string& token)
 	{
-		std::random_device rd;
-		std::mt19937 gen(rd());
-		std::uniform_int_distribution<> dist(0, transitions.size() - 1);
+		// List of common subjects and verbs (this can be expanded for more complex grammar)
+		std::vector<std::string> subjects = { "I", "You", "He", "She", "It", "We", "They" };
+		std::vector<std::string> verbs = { "am", "is", "are", "was", "were", "do", "does", "did", "has", "have", "had" };
 
-		std::vector<std::string> keys;
-		for (const auto& pair : transitions)
+		if (std::find(subjects.begin(), subjects.end(), token) != subjects.end())
 		{
-			keys.emplace_back(pair.first);
+			return true; // It's a subject
 		}
 
-		return keys[dist(gen)];
+		if (std::find(verbs.begin(), verbs.end(), token) != verbs.end())
+		{
+			return true; // It's a verb
+		}
+
+		return false; // It's neither a subject nor a verb
 	}
+
 }
