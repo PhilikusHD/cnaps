@@ -1,21 +1,29 @@
 #include "ChatbotAPI.h"
 
-void InitializeChatbot() {
+void InitializeChatbot()
+{
 	// Not implemented
 }
 
-void ShutdownChatbot() {
+void ShutdownChatbot()
+{
 	// Not implemented
 }
 
-const char* GenerateResponse(const char* input) {
+const char* GenerateResponse(const char* input)
+{
 	// Not implemented
+	return "";
 }
 
-const bool GetStatus() {
+const bool GetStatus()
+{
 	// Not implemented
+	return false;
 }
 
-const char* GetError() {
+const char* GetError()
+{
 	// Not implemented
+	return "";
 }
