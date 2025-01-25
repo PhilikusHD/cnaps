@@ -17,7 +17,6 @@ namespace Ravi
 	private:
 		size_t m_NGrams;
 		Tokenizer m_Tokenizer;
-		std::map<std::vector<std::string>, std::map<std::string, int>> m_UserMarkov;
 		std::map<std::vector<std::string>, std::map<std::string, int>> m_BotMarkov;
 
 		void TrainOnTokens(const std::vector<std::string>& tokens, std::map<std::vector<std::string>, std::map<std::string, int>>& markovModel) const;

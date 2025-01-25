@@ -32,17 +32,7 @@ namespace Ravi
 	// Purely for internal training purposes. If you use this in prod, I will fucking explode.
 	void MarkovModel::Train(const std::vector<std::string>& userTokens, const std::vector<std::string>& botTokens)
 	{
-		// Launch two threads for training on userTokens and botTokens
-		std::thread userThread([&]() {
-			TrainOnTokens(userTokens, m_UserMarkov);
-			});
-
-		std::thread botThread([&]() {
-			TrainOnTokens(botTokens, m_BotMarkov);
-			});
-
-		userThread.join();
-		botThread.join();
+		TrainOnTokens(botTokens, m_BotMarkov);
 	}
 
 	std::string MarkovModel::GenerateResponse(const std::string& userInput)

@@ -12,28 +12,16 @@ int main()
 	std::cout << std::filesystem::current_path() << std::endl;
 
 	Tokenizer tokenizer;
-	MarkovModel bot(5);
+	MarkovModel bot(3);
 
-	CorpusLoader loader("angryCustomersTrainingData.txt", &tokenizer);
+	CorpusLoader loader("sample_conversation.txt", &tokenizer);
 	auto dialogues = loader.LoadAndTokenize();
 
 	std::vector<std::string> userTokens;
 	std::vector<std::string> botTokens;
 	for (const auto& dialogue : dialogues)
 	{
-		// Launch two threads for tokenization
-		std::thread userThread([&]() {
-			userTokens = tokenizer.Tokenize(dialogue.first);
-			});
-
-		std::thread botThread([&]() {
-			botTokens = tokenizer.Tokenize(dialogue.second);
-			});
-
-		// Wait for both threads to finish
-		userThread.join();
-		botThread.join();
-
+		botTokens = tokenizer.Tokenize(dialogue.second);
 		bot.Train(userTokens, botTokens);
 	}
 
