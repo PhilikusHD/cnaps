@@ -5,8 +5,7 @@
 int main()
 {
 	Ravi::Tokenizer tokenizer;
-	tokenizer.AddDelimiter('-');
-	std::string text = "Hello, world! Welcomé to NLP-Tokenizer. Let's tokenize this text.";
+	std::string text = "Hellô, world! I'm Wêlcomé to NLP-Tokenizer. We're Let's tokenize this text.";
 
 	std::vector<std::string> tokens = tokenizer.Tokenize(text);
 	std::cout << "Tokens:\n";
