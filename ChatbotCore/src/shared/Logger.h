@@ -8,7 +8,7 @@ namespace Logger
 {
 	enum class Level { INFO, WARNING, ERROR };
 
-	void Log(const std::string& message, Level level = Level::INFO)
+	static void Log(const std::string& message, Level level = Level::INFO)
 	{
 		const char* levelStr = (level == Level::INFO) ? "INFO" :
 			(level == Level::WARNING) ? "WARNING" : "ERROR";
