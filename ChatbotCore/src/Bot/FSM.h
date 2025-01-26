@@ -18,6 +18,7 @@ private:
 	void Transition(State newState);
 	bool CanTransition(State newState) const;
 	bool StateMatchesKeyword(State state, const std::string& keyword) const;
+	void AddWords();
 private:
 	State m_CurrentState;
 	std::unordered_map<State, std::vector<State>> m_Transitions;

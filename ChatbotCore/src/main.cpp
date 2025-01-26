@@ -24,12 +24,6 @@ int main()
 
 	fsm.AddTransition(State::Escalation, State::Goodbye);
 
-	// Define keywords
-	fsm.AddKeywords(State::ProblemDesc, { "problem", "issue", "broken" });
-	fsm.AddKeywords(State::Consideration, { "consider", "option", "solution" });
-	fsm.AddKeywords(State::Escalation, { "urgent", "escalate", "manager" });
-	fsm.AddKeywords(State::Goodbye, { "bye", "goodbye", "exit" });
-
 	// Simulate user input
 	std::string input;
 	while (fsm.GetCurrentState() != State::Goodbye)

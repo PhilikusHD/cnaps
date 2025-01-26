@@ -22,7 +22,7 @@ namespace Logger
 		std::cout << "[" << timestamp << "] [" << levelStr << "] " << message << std::endl;
 
 		// Write to a log file, can remove or not idc
-		std::ofstream logFile("app.log", std::ios::app);
+		std::ofstream logFile("Debug.log", std::ios::app);
 		logFile << "[" << timestamp << "] [" << levelStr << "] " << message << std::endl;
 	}
 }
