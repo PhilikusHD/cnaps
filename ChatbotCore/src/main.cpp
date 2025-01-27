@@ -4,12 +4,26 @@
 #include "shared/Utils.h"
 #include "ChatbotAPI/ChatBotApi.h"
 #include "Bot/FSM.h"
-
-extern FiniteStateMachine fsm;
+#include "Bot/ResponseManager.h"
 
 int main()
 {
-	InitializeChatbot();
+	FiniteStateMachine fsm(State::Greeting);
+	ResponseManager responseManager;
+
+	// Define transitions
+	fsm.AddTransition(State::Greeting, State::ProblemDesc);
+	fsm.AddTransition(State::Greeting, State::Goodbye);
+
+	fsm.AddTransition(State::ProblemDesc, State::Consideration);
+	fsm.AddTransition(State::ProblemDesc, State::Escalation);
+	fsm.AddTransition(State::ProblemDesc, State::Goodbye);
+
+	fsm.AddTransition(State::Consideration, State::Escalation);
+	fsm.AddTransition(State::Consideration, State::ProblemDesc);
+	fsm.AddTransition(State::Consideration, State::Goodbye);
+
+	fsm.AddTransition(State::Escalation, State::Goodbye);
 
 	// Simulate user input
 	std::string input;
@@ -20,6 +34,8 @@ int main()
 
 		fsm.ProcessInput(input);
 		std::cout << "FSM is now in state: " << static_cast<int>(fsm.GetCurrentState()) << "\n";
+		std::string response = responseManager.GetResponse(fsm.GetCurrentState(), input, "garden beetle");
+		std::cout << response << std::endl;
 	}
 	return 0;
 }
