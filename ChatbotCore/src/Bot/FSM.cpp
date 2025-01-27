@@ -1,5 +1,6 @@
 #include "FSM.h"
 #include "shared/Logger.h"
+#include "Bot/Preprocessor.h"
 
 FiniteStateMachine::FiniteStateMachine(State initialState)
 	: m_CurrentState(initialState)
@@ -20,6 +21,7 @@ void FiniteStateMachine::AddKeywords(State from, const std::vector<std::string>&
 State FiniteStateMachine::ProcessInput(const std::string& input)
 {
 	Logger::Log("Processing input: " + input);
+	Preprocessor::PreprocessInput(const_cast<std::string&>(input));
 
 	// Iterate over all possible transitions from the current state
 	for (const auto& nextState : m_Transitions[m_CurrentState])

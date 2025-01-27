@@ -1,9 +1,10 @@
 #include "ChatbotAPI.h"
 #include "Bot/FSM.h"
+
 static FiniteStateMachine fsm(State::Greeting);
+
 void InitializeChatbot()
 {
-
 	fsm.AddTransition(State::Greeting, State::ProblemDesc);
 	fsm.AddTransition(State::Greeting, State::Goodbye);
 
@@ -16,7 +17,6 @@ void InitializeChatbot()
 	fsm.AddTransition(State::Consideration, State::Goodbye);
 
 	fsm.AddTransition(State::Escalation, State::Goodbye);
-
 }
 
 void ShutdownChatbot()
