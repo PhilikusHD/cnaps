@@ -2,27 +2,14 @@
 #include "shared/Logger.h"
 #include "shared/RandomUtils.h"
 #include "shared/Utils.h"
-
+#include "ChatbotAPI/ChatBotApi.h"
 #include "Bot/FSM.h"
 
+extern FiniteStateMachine fsm;
 
 int main()
 {
-	FiniteStateMachine fsm(State::Greeting);
-
-	// Define transitions
-	fsm.AddTransition(State::Greeting, State::ProblemDesc);
-	fsm.AddTransition(State::Greeting, State::Goodbye);
-
-	fsm.AddTransition(State::ProblemDesc, State::Consideration);
-	fsm.AddTransition(State::ProblemDesc, State::Escalation);
-	fsm.AddTransition(State::ProblemDesc, State::Goodbye);
-
-	fsm.AddTransition(State::Consideration, State::Escalation);
-	fsm.AddTransition(State::Consideration, State::ProblemDesc);
-	fsm.AddTransition(State::Consideration, State::Goodbye);
-
-	fsm.AddTransition(State::Escalation, State::Goodbye);
+	InitializeChatbot();
 
 	// Simulate user input
 	std::string input;
