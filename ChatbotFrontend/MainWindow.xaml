@@ -18,9 +18,9 @@
             <Button Content="Send" Width="70" Height="30" Margin="10,0,0,0" Background="#FFFB90B7" Foreground="White"
                     FontWeight="Bold" BorderThickness="0" Click="SendMessage_Click"/>
         </StackPanel>
-        <Image Margin="125,259,125,81" Source="/IMG_9265.png" Grid.ColumnSpan="2"/>
+        <Image Margin="125,259,125,81" Source="/assets/IMG_9265.png" Grid.ColumnSpan="2"/>
         <Border BorderThickness="2" Grid.ColumnSpan="2" Margin="135,170,135,237" CornerRadius="30,30,30,30" Background="#FFFFCADE"/>
-        <TextBlock TextWrapping="Wrap" Grid.ColumnSpan="2" Margin="148,0,0,260" FontFamily="Microsoft JhengHei" RenderTransformOrigin="0.5,0.5" Width="108" VerticalAlignment="Bottom" HorizontalAlignment="Left" TextAlignment="Center" FontWeight="Bold" Height="32">
+        <TextBlock TextWrapping="Wrap" Grid.ColumnSpan="2" Margin="140,0,0,260" FontFamily="Microsoft JhengHei" RenderTransformOrigin="0.5,0.5" Width="108" VerticalAlignment="Bottom" HorizontalAlignment="Left" TextAlignment="Center" FontWeight="Bold" Height="32">
             <TextBlock.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -28,7 +28,8 @@
                     <RotateTransform/>
                     <TranslateTransform Y="0"/>
                 </TransformGroup>
-            </TextBlock.RenderTransform><Run Text="How can I h"/><Run Language="de-de" Text="elp you today"/><Run Text="?"/></TextBlock>
+            </TextBlock.RenderTransform><Run Text="How can I help you today"/><Run Language="de-de" /><Run Text="?"/></TextBlock>
+        <Image Height="100" Width="100"/>
     </Grid>
 </Window>
     

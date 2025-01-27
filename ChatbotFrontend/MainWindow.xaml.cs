@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -21,7 +22,26 @@ namespace ChatbotFrontend
     public partial class MainWindow : Window
     {
         [DllImport("ChatbotCore.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern nint GetGreeting();
+        public static extern void InitializeChatbot();
+        [DllImport("ChatbotCore.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void ShutdownChatbot();
+        [DllImport("ChatbotCore.dll", CallingConvention = CallingConvention.Cdecl)]
+        private static extern int GenerateResponse();
+        [DllImport("ChatbotCore.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern bool GetStatus();
+        [DllImport("ChatbotCore.dll", CallingConvention = CallingConvention.Cdecl)]
+        private static extern int GetError();
+
+        public static string GenerateResponseString() 
+        { 
+            return Marshal.PtrToStringAnsi(GenerateResponse());
+        }
+
+        public static string GetErrorString()
+        {
+            return Marshal.PtrToStringAnsi(GetError());
+        }
+
         public MainWindow()
         {
             InitializeComponent();
@@ -29,6 +49,7 @@ namespace ChatbotFrontend
 
         private void SendMessage_Click(object sender, RoutedEventArgs e)
         {
+            Console.WriteLine("Halllllpoooooooo");
         }
 
         private void ChatLog_SelectionChanged(object sender, SelectionChangedEventArgs e)
