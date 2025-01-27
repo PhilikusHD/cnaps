@@ -33,8 +33,8 @@ int main()
 
 		fsm.ProcessInput(input);
 		std::cout << "FSM is now in state: " << static_cast<int>(fsm.GetCurrentState()) << "\n";
-		std::string response = responseManager.GetResponse(fsm.GetCurrentState(), input, "garden beetle");
-		std::cout << response << std::endl;
+		std::string response = responseManager.GetResponse(fsm.GetCurrentState(), input, fsm.GetContext());
+		std::cout << "Bot: " << response << std::endl;
 	}
 	return 0;
 }

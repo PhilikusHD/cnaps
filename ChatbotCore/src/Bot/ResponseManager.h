@@ -25,4 +25,5 @@ private:
 	std::string SelectTemplate(const std::unordered_map<Category, std::vector<std::string>>& templates, Category category);
 	void ReplacePlaceholder(std::string& templateStr, const std::string& placeholder, const std::string& value);
 	std::string AddDynamicFlavor(const std::string& baseResponse, const std::string& userInput);
+	std::string BuildContextString(const std::vector<std::string>& contexts);
 };

@@ -1,6 +1,8 @@
 #include "FSM.h"
 #include "shared/Logger.h"
+#include "shared/Memory/Scope.h"
 #include "Bot/Preprocessor.h"
+#include "Bot/ContextExtractor.h"
 
 FiniteStateMachine::FiniteStateMachine(State initialState)
 	: m_CurrentState(initialState)
@@ -22,6 +24,10 @@ State FiniteStateMachine::ProcessInput(const std::string& input)
 {
 	Logger::Log("Processing input: " + input);
 	Preprocessor::PreprocessInput(const_cast<std::string&>(input));
+	Logger::Log("Preprocessing complete. Cleaned input: '" + input + "'");
+
+	std::string context = ExtractContext(input);
+	Logger::Log("Extracted Context: " + context);
 
 	// Iterate over all possible transitions from the current state
 	for (const auto& nextState : m_Transitions[m_CurrentState])
@@ -33,6 +39,7 @@ State FiniteStateMachine::ProcessInput(const std::string& input)
 		{
 			Logger::Log("Transitioning to state: " + std::to_string(static_cast<int>(nextState)));
 			Transition(nextState);
+			m_Context = context;
 			return m_CurrentState;
 		}
 	}
@@ -40,9 +47,14 @@ State FiniteStateMachine::ProcessInput(const std::string& input)
 	return m_CurrentState;
 }
 
-State FiniteStateMachine::GetCurrentState()
+State FiniteStateMachine::GetCurrentState() const
 {
 	return m_CurrentState;
+}
+
+std::string FiniteStateMachine::GetContext() const
+{
+	return m_Context;
 }
 
 bool FiniteStateMachine::CheckTransitionForState(State state, const std::string& input) const
@@ -59,6 +71,12 @@ bool FiniteStateMachine::CheckTransitionForState(State state, const std::string&
 		}
 	}
 	return false;
+}
+
+std::string FiniteStateMachine::ExtractContext(const std::string& input)
+{
+	ContextExtractor contextExtractor;
+	return contextExtractor.ExtractContext(input);
 }
 
 void FiniteStateMachine::Transition(State newState)

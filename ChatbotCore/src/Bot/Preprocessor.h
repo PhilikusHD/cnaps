@@ -64,7 +64,5 @@ namespace Preprocessor
 		// Spell check mabe?
 
 		input = StemWords(tokens);
-
-		Logger::Log("Preprocessing complete. Cleaned input: '" + input + "'");
 	}
 }
