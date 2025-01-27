@@ -1,6 +1,7 @@
 #pragma once
+#include "shared/Types.h"
 
-enum class State : unsigned char
+enum class State : Raven::uint8
 {
 	Greeting,
 	ProblemDesc,

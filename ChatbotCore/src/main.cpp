@@ -4,11 +4,12 @@
 #include "shared/Utils.h"
 
 #include "Bot/FSM.h"
-
+#include "Bot/ResponseManager.h"
 
 int main()
 {
 	FiniteStateMachine fsm(State::Greeting);
+	ResponseManager responseManager;
 
 	// Define transitions
 	fsm.AddTransition(State::Greeting, State::ProblemDesc);
@@ -33,6 +34,8 @@ int main()
 
 		fsm.ProcessInput(input);
 		std::cout << "FSM is now in state: " << static_cast<int>(fsm.GetCurrentState()) << "\n";
+		std::string response = responseManager.GetResponse(fsm.GetCurrentState(), input, "garden beetle");
+		std::cout << response << std::endl;
 	}
 	return 0;
 }
