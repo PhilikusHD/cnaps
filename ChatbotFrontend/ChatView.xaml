@@ -1,8 +1,10 @@
 ﻿<Window x:Class="ChatbotFrontend.ChatView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="BUGLAND Support" Height="500" Width="400" Background="#FFE6E6FA"
-        Icon="assets/buggyicon.ico">
+        Title="BUGLAND Support" Height="500" Width="400" Background="#FFE6E6FA">
+    <Window.Icon>
+        <BitmapImage UriSource="assets/buggyicon.ico"/>
+    </Window.Icon>
     <Grid Height="484" VerticalAlignment="Bottom">
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
