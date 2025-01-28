@@ -13,6 +13,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Xml.Serialization;
 
 namespace ChatbotFrontend
 {
@@ -41,15 +42,27 @@ namespace ChatbotFrontend
         {
             return Marshal.PtrToStringAnsi(GetError());
         }
-
         public MainWindow()
         {
             InitializeComponent();
+            ShowChatView();
+        }
+
+        //private void ShowChatView_Click(object sender, RoutedEventArgs e)
+        //{
+          //  ShowChatView();
+
+       // }
+        
+        private void ShowChatView()
+        {
+            ContentArea.Content = new ChatView();
         }
 
         private void SendMessage_Click(object sender, RoutedEventArgs e)
         {
-            Console.WriteLine("Halllllpoooooooo");
+            ShowChatView();
+            //Console.WriteLine("hallo");
         }
 
         private void ChatLog_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -64,5 +77,6 @@ namespace ChatbotFrontend
                 ChatLog.Items.Add("Bot: " + GenerateResponseString());
             }
         }
+
     }
 }
