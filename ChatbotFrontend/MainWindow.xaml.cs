@@ -27,17 +27,22 @@ namespace ChatbotFrontend
         [DllImport("ChatbotCore.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void ShutdownChatbot();
         [DllImport("ChatbotCore.dll", CallingConvention = CallingConvention.Cdecl)]
-        private static extern int GenerateResponse();
+        private static extern IntPtr GenerateResponse([MarshalAs(UnmanagedType.LPStr)] string input);
+        [DllImport("ChatbotCore.dll", CallingConvention = CallingConvention.Cdecl)]
+        private static extern void FreeResponse(IntPtr response);
+
         [DllImport("ChatbotCore.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern bool GetStatus();
         [DllImport("ChatbotCore.dll", CallingConvention = CallingConvention.Cdecl)]
-        private static extern int GetError();
+        private static extern IntPtr GetError();
 
-        public static string GenerateResponseString()
+        public static string GenerateResponseString(string input)
         {
-            return Marshal.PtrToStringAnsi(GenerateResponse());
+            IntPtr resultPtr = GenerateResponse(input);
+            string result = Marshal.PtrToStringAnsi(resultPtr);
+            FreeResponse(resultPtr);
+            return result;
         }
-
         public static string GetErrorString()
         {
             return Marshal.PtrToStringAnsi(GetError());
@@ -74,7 +79,7 @@ namespace ChatbotFrontend
             {
                 ChatLog.Items.Add("You: " + userMessage);
 
-                ChatLog.Items.Add("Bot: " + GenerateResponseString());
+                ChatLog.Items.Add("Bot: " + GenerateResponseString(userMessage));
             }
         }
 

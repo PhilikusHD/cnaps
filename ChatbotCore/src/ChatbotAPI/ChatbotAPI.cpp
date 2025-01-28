@@ -41,7 +41,11 @@ const char* GenerateResponse(const char* input)
 		response += "\n" + responseManager.GenerateSolutionResponse(fsm.GetContext());
 	}
 	fsm.ResetContext();
-	return response.c_str();
+
+	// Dynamically allocate memory for the response
+	char* result = new char[response.size() + 1]; // +1 for null terminator
+	strcpy_s(result, sizeof(result), response.c_str());
+	return result;
 }
 
 const bool GetStatus()
@@ -54,4 +58,9 @@ const char* GetError()
 {
 	// Not implemented
 	return "";
+}
+
+void FreeResponse(char* response)
+{
+	delete[] response;
 }
