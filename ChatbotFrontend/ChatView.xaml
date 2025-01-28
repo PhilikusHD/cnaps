@@ -19,8 +19,8 @@
         <StackPanel x:Name="UserView" Orientation="Horizontal" VerticalAlignment="Bottom" Margin="10,0,10,10" Grid.ColumnSpan="2" Height="30">
             <TextBox x:Name="UserInput" Width="300" Height="30" Background="#FFFDEBF7" Foreground="#FF333333"
                      BorderBrush="#FFFB90B7" BorderThickness="2" FontFamily="Segoe UI"/>
-            <Button Content="Send" Width="55" Height="30" Margin="10,0,0,0" Background="#FFFB90B7" Foreground="White"
-                    FontWeight="Bold" BorderThickness="0" Click="SendMessage_Click" HorizontalAlignment="Center"/>
+            <Button Content="Send" Width="71" Height="30" Margin="10,0,0,0" Background="#FFFB90B7" Foreground="White"
+                    FontWeight="Bold" BorderThickness="0" Click="SendMessage_Click"/>
         </StackPanel>
         <Image Height="100" Width="100"/>
         <Image RenderTransformOrigin="1,1" Margin="10,208,104,192" Source="assets/buggyicon.ico"/>

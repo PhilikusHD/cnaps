@@ -17,7 +17,7 @@ namespace ChatbotFrontend
     /// <summary>
     /// Interaktionslogik für ChatView.xaml
     /// </summary>
-    public partial class ChatView : Window
+    public partial class ChatView : UserControl
     {
         public ChatView()
         {

@@ -33,8 +33,8 @@ namespace ChatbotFrontend
         [DllImport("ChatbotCore.dll", CallingConvention = CallingConvention.Cdecl)]
         private static extern int GetError();
 
-        public static string GenerateResponseString() 
-        { 
+        public static string GenerateResponseString()
+        {
             return Marshal.PtrToStringAnsi(GenerateResponse());
         }
 
@@ -50,10 +50,10 @@ namespace ChatbotFrontend
 
         //private void ShowChatView_Click(object sender, RoutedEventArgs e)
         //{
-          //  ShowChatView();
+        //  ShowChatView();
 
-       // }
-        
+        // }
+
         private void ShowChatView()
         {
             ContentArea.Content = new ChatView();
