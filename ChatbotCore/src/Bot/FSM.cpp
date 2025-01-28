@@ -120,7 +120,15 @@ void FiniteStateMachine::AddWords()
 		"error", "bug", "malfunction", "doesn't work", "not working", "broken",
 		"malfunctioning", "fault", "glitch", "doesn't function", "failing",
 		"not responding", "not performing", "can't use", "can't work", "it's broken",
-		"it's failing", "issue with", "not fixed", "not working as expected", "stop working", "help"
+		"it's failing", "issue with", "not fixed", "not working as expected", "stop working", "help",
+		});
+
+	AddKeywords(State::Solution, {
+		"damage", "broken", "scratch", "crack", "fault", "ruined", "fracture",
+		"shatter", "destroy", "impair", "weaken", "bust", "split", "chip",
+		"dent", "corrode", "wrecked", "mar", "blemish", "erode", "gouge",
+		"degrade", "torn", "split", "scuff", "scar", "wear", "tear",
+		"deform", "impact", "debris", "fragment"
 		});
 
 	// Consideration state (State 2)

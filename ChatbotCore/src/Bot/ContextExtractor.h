@@ -2,6 +2,7 @@
 #include <string>
 #include <unordered_map>
 #include <vector>
+#include "Bot/States.h"
 
 class ContextExtractor
 {
@@ -11,8 +12,9 @@ public:
 	std::string ExtractContext(const std::string& input);
 private:
 	// Entity-to-keyword map
-	std::unordered_map<std::string, std::vector<std::string>> m_EntityKeywords;
+	std::unordered_map<ContextCategory, std::vector<std::string>> m_EntityKeywords;
 
 	void InitEntityKeywords();
-	std::string BuildContextString(const std::unordered_map<std::string, std::string>& entities);
+	std::string BuildContextString(const std::unordered_map<ContextCategory, std::string>& entities);
+	std::string GetCategoryString(ContextCategory category);
 };

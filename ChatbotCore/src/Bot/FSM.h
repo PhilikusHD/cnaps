@@ -13,6 +13,7 @@ public:
 
 	[[nodiscard]] State GetCurrentState() const;
 	[[nodiscard]] std::string GetContext() const;
+	void ResetContext() { m_Context = ""; }
 
 	bool CheckTransitionForState(State state, const std::string& input) const;
 

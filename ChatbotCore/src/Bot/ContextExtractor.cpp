@@ -3,6 +3,7 @@
 #include "shared/Types.h"
 #include <unordered_set>
 #include <algorithm>
+#include "States.h"
 
 ContextExtractor::ContextExtractor()
 {
@@ -11,40 +12,51 @@ ContextExtractor::ContextExtractor()
 
 std::string ContextExtractor::ExtractContext(const std::string& input)
 {
-	std::unordered_map<std::string, std::string> selectedEntities;
+	std::unordered_map<ContextCategory, std::string> selectedEntities; // Use the enum for categories
+	std::unordered_map<ContextCategory, int> matchScores; // To prioritize matches
 
 	// Match against entity keywords
-	for (const auto& [entity, keywords] : m_EntityKeywords)
+	for (const auto& [category, keywords] : m_EntityKeywords)
 	{
 		for (const auto& keyword : keywords)
 		{
-			if (input.find(keyword) != std::string::npos)
+			// Check if the keyword is found in the input
+			size_t position = input.find(keyword);
+			if (position != std::string::npos)
 			{
-				// Add only the first match from each entity category
-				if (selectedEntities.find(entity) == selectedEntities.end())
+				// Calculate relevance score (e.g., position in text, length of match)
+				int score = static_cast<int>(keyword.length()) - static_cast<int>(position);
+
+				// Add or update the best match for this category
+				if (selectedEntities.find(category) == selectedEntities.end() || score > matchScores[category])
 				{
-					selectedEntities[entity] = keyword;
+					selectedEntities[category] = keyword;
+					matchScores[category] = score;
 				}
-				break;
 			}
 		}
 	}
 
 	if (!selectedEntities.empty())
 	{
+		// Use the enhanced BuildContextString to format the output
 		return BuildContextString(selectedEntities);
 	}
 
 	return "";
 }
 
-std::string ContextExtractor::BuildContextString(const std::unordered_map<std::string, std::string>& entities)
+
+std::string ContextExtractor::BuildContextString(const std::unordered_map<ContextCategory, std::string>& entities)
 {
 	std::vector<std::string> contextList;
 
+	// Convert categories to readable strings and build the context
 	for (const auto& [category, keyword] : entities)
 	{
-		contextList.push_back(keyword);
+		// Get the string representation of the category
+		std::string categoryStr = GetCategoryString(category);
+		contextList.emplace_back(categoryStr);
 	}
 
 	if (contextList.empty())
@@ -65,44 +77,47 @@ std::string ContextExtractor::BuildContextString(const std::unordered_map<std::s
 	return result;
 }
 
+std::string ContextExtractor::GetCategoryString(ContextCategory category)
+{
+	// Return a string representation of the category
+	switch (category)
+	{
+	case ContextCategory::Refund:
+		return "refund";
+	case ContextCategory::Gardenbeetle:
+		return "gardenbeetle";
+	case ContextCategory::Windowfly:
+		return "windowfly";
+	case ContextCategory::Cleanbug:
+		return "cleanbug";
+	default:
+		return "default";
+	}
+}
 
 void ContextExtractor::InitEntityKeywords()
 {
 	m_EntityKeywords = {
-		// Bugs and errors
-		{"bug", {
-			"error", "glitch", "malfunction", "problem", "fault",
-			"defect", "flaw", "hitch", "snag", "anomaly", "quirk", "breakage",
-			"imperfection", "mishap", "oversight", "irregularity", "failure",
-			"mistake", "blunder", "shortcoming"
+		// Refund-related
+		{ContextCategory::Refund, {
+			"money", "money back", "refund"
 		}},
 
-		// Floors, tiles, and ground-related
-		{"floor", {
-			"floor", "tile", "ground", "scratch", "surface", "deck", "carpet",
+		// Bugs and errors (related to gardenbeetle)
+		{ContextCategory::Gardenbeetle, {
+			"gardenbeetle", "garden beetle", "lawn", "grass", "wheat"
+		}},
+
+		// Cleanbug-related (floor or ground related)
+		{ContextCategory::Cleanbug, {
+			"cleanbug", "clean bug" ,"floor", "tile", "ground", "surface", "deck", "carpet",
 			"hardwood", "laminate", "vinyl", "parquet", "marble", "ceramic",
 			"granite", "concrete", "plank", "rug", "mat", "linoleum", "base",
-			"pavement", "stone", "floorboard", "brick", "asphalt", "glass", "grass",
-			"window", "pane", "wheats"
 		}},
 
-		// Damage-related terms
-		{"damage", {
-			"damage", "broken", "scratch", "crack", "fault", "ruined", "fracture",
-			"shatter", "destroy", "impair", "weaken", "bust", "split", "chip",
-			"dent", "corrode", "wrecked", "mar", "blemish", "erode", "gouge",
-			"degrade", "torn", "split", "scuff", "scar", "wear", "tear",
-			"deform", "impact", "debris", "fragment"
-		}},
-
-
-		// Hardware and devices
-		{"hardware", {
-			"hardware", "device", "equipment", "machine", "gadget", "component",
-			"tool", "appliance", "gear", "instrument", "unit", "mechanism",
-			"contraption", "processor", "chip", "controller", "peripheral", "server",
-			"sensor", "windowfly", "garden beetle", "clean bug", "window fly", "cleanbug",
-			"gardenbeetle"
+		// Windowfly-related (window and glass)
+		{ContextCategory::Windowfly, {
+			"window", "pane", "glass", "windowfly", "clean window", "window cleaner", "window fly"
 		}}
 	};
 }

@@ -10,9 +10,9 @@ namespace RandomUtils
 	static std::mt19937 rng(rd());
 
 	// Generate a random integer in a range
-	static int RandomInt(int min, int max)
+	static int RandomInt(size_t min, size_t max)
 	{
-		std::uniform_int_distribution<int> dist(min, max);
+		std::uniform_int_distribution<size_t> dist(min, max);
 		return dist(rng);
 	}
 
