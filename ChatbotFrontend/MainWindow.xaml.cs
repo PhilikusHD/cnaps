@@ -45,7 +45,7 @@ namespace ChatbotFrontend
         public MainWindow()
         {
             InitializeComponent();
-            ShowChatView();
+            InitializeChatbot();
         }
 
         //private void ShowChatView_Click(object sender, RoutedEventArgs e)
