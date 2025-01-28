@@ -54,7 +54,15 @@ namespace ChatbotFrontend
 
         private void ChatLog_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            WelcomeImage.Visibility = Visibility.Collapsed;
 
+            string userMessage = UserInput.Text;
+            if (!string.IsNullOrWhiteSpace(userMessage))
+            {
+                ChatLog.Items.Add("You: " + userMessage);
+
+                ChatLog.Items.Add("Bot: " + GenerateResponseString());
+            }
         }
     }
 }
