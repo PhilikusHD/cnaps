@@ -100,6 +100,8 @@ namespace ChatbotFrontend
             Paragraph paragraph = new Paragraph();
             paragraph.Margin = new Thickness(0, 5, 0, 5);
 
+            paragraph.TextAlignment = isBot ? TextAlignment.Left : TextAlignment.Right;
+
             Border border = new Border
             {
                 CornerRadius = new CornerRadius(10),

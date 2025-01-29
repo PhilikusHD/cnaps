@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:ChatbotFrontend"
         Height="500" Width="400" Background="#FFE6E6FA">
+        
 
     <Window.Icon>
         <BitmapImage UriSource="assets\buggyicon.ico"/>
@@ -37,6 +38,6 @@
                     FontWeight="Bold" BorderThickness="0" Click="SendMessage_Click" VerticalAlignment="Center"/>
         </StackPanel>
         <Image Height="100" Width="100"/>
-        <Image RenderTransformOrigin="1,1" Margin="84,33,30,367" Source="assets\buggyicon.ico" Grid.Column="1"/>
+        <Image RenderTransformOrigin="1,1" Margin="24,22,90,378" Source="assets\buggyicon.ico"/>
     </Grid>
 </Window>
