@@ -24,63 +24,40 @@ namespace ChatbotFrontend
     {
         [DllImport("ChatbotCore.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void InitializeChatbot();
-        [DllImport("ChatbotCore.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void ShutdownChatbot();
-        [DllImport("ChatbotCore.dll", CallingConvention = CallingConvention.Cdecl)]
-        private static extern IntPtr GenerateResponse([MarshalAs(UnmanagedType.LPStr)] string input);
-        [DllImport("ChatbotCore.dll", CallingConvention = CallingConvention.Cdecl)]
-        private static extern void FreeResponse(IntPtr response);
 
         [DllImport("ChatbotCore.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern bool GetStatus();
+        private static extern IntPtr GenerateResponse([MarshalAs(UnmanagedType.LPStr)] string input);
+
         [DllImport("ChatbotCore.dll", CallingConvention = CallingConvention.Cdecl)]
         private static extern IntPtr GetError();
 
-        public static string GenerateResponseString(string input)
-        {
-            IntPtr resultPtr = GenerateResponse(input);
-            string result = Marshal.PtrToStringAnsi(resultPtr);
-            FreeResponse(resultPtr);
-            return result;
-        }
-        public static string GetErrorString()
-        {
-            return Marshal.PtrToStringAnsi(GetError());
-        }
         public MainWindow()
         {
             InitializeComponent();
             InitializeChatbot();
         }
 
-        //private void ShowChatView_Click(object sender, RoutedEventArgs e)
-        //{
-        //  ShowChatView();
 
-        // }
-
-        private void ShowChatView()
+        private void ShowChatView(string userInput)
         {
-            ContentArea.Content = new ChatView();
+            ContentArea.Content = new ChatView(userInput);
         }
 
         private void SendMessage_Click(object sender, RoutedEventArgs e)
         {
-            ShowChatView();
-            //Console.WriteLine("hallo");
-        }
-
-        private void ChatLog_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
             WelcomeImage.Visibility = Visibility.Collapsed;
 
             string userMessage = UserInput.Text;
-            if (!string.IsNullOrWhiteSpace(userMessage))
-            {
-                ChatLog.Items.Add("You: " + userMessage);
+            ShowChatView(userMessage);
+            //if (!string.IsNullOrWhiteSpace(userMessage))
+            //{
+            //    ChatLog.Items.Add("You: " + userMessage);
 
-                ChatLog.Items.Add("Bot: " + GenerateResponseString(userMessage));
-            }
+            //    ChatLog.Items.Add("Bot: " + GenerateResponseString(userMessage));
+
+            //    MessageBox.Show("User input: " + userMessage);
+            //}
+
         }
 
     }
