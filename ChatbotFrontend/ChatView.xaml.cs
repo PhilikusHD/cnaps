@@ -142,6 +142,10 @@ namespace ChatbotFrontend
             formattedMessage.AppendLine(currentLine.Trim());
             return formattedMessage.ToString().TrimEnd();
         }
-           
+
+        private void RichTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
     }
 }
