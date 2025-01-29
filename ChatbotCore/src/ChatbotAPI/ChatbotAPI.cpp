@@ -1,6 +1,7 @@
 #include "ChatbotAPI.h"
 #include "Bot/FSM.h"
 #include <Bot/ResponseManager.h>
+#include "shared/Logger.h"
 
 static FiniteStateMachine fsm(State::Greeting);
 static ResponseManager responseManager;
@@ -44,7 +45,8 @@ const char* GenerateResponse(const char* input)
 
 	// Dynamically allocate memory for the response
 	char* result = new char[response.size() + 1]; // +1 for null terminator
-	strcpy_s(result, sizeof(result), response.c_str());
+	result[response.size()] = '\0';
+	strcpy_s(result, response.size() + 1, response.c_str());
 	return result;
 }
 
