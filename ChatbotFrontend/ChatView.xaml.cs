@@ -21,7 +21,7 @@ namespace ChatbotFrontend
     /// </summary>
     /// 
 
-    public struct ChatMessage
+    public class ChatMessage
     {
         public string Message { get; set; }
         public bool isBot { get; set; }
