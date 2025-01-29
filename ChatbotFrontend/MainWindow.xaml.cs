@@ -40,7 +40,9 @@ namespace ChatbotFrontend
 
         private void ShowChatView(string userInput)
         {
-            ContentArea.Content = new ChatView(userInput);
+            ChatView chatView = new ChatView(userInput);
+            chatView.Show();
+            this.Close();
         }
 
         private void SendMessage_Click(object sender, RoutedEventArgs e)

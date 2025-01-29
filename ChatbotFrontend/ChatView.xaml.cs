@@ -19,7 +19,35 @@ namespace ChatbotFrontend
     /// <summary>
     /// Interaktionslogik für ChatView.xaml
     /// </summary>
-    public partial class ChatView : UserControl
+    /// 
+
+    public struct ChatMessage
+    {
+        public string Message { get; set; }
+        public bool isBot { get; set; }
+    }
+
+    public class BoolToBrushConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value is bool isBot)
+            {
+                var brushConverter = new BrushConverter();
+                return isBot
+                    ? (Brush)brushConverter.ConvertFromString("#FFFFB9D3") //Bot
+                    : (Brush)brushConverter.ConvertFromString("#FFFB90B7"); //User
+            }
+            return Brushes.Transparent;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public partial class ChatView : Window
     {
 
         [DllImport("ChatbotCore.dll", CallingConvention = CallingConvention.Cdecl)]
@@ -48,7 +76,7 @@ namespace ChatbotFrontend
         {
             IntPtr resultPtr = GenerateResponse(input);
             string result = Marshal.PtrToStringAnsi(resultPtr);
-            //FreeResponse(resultPtr);
+            FreeResponse(resultPtr);
             return result;
         }
         public static string GetErrorString()
@@ -60,17 +88,17 @@ namespace ChatbotFrontend
         private void SendMessage_Click(object sender, RoutedEventArgs e)
         {
             string userInputText = FormatMessage(UserInput.Text);
-            ChatLog.Items.Add(new ChatMessage { Message = FormatMessage(userInputText), isBot = false});
+            ChatLog.Items.Add(new ChatMessage { Message = FormatMessage(userInputText), isBot = false });
 
             string botResponse = GenerateResponseString(userInputText);
-            ChatLog.Items.Add(new ChatMessage { Message = FormatMessage(botResponse), isBot = true});
+            ChatLog.Items.Add(new ChatMessage { Message = FormatMessage(botResponse), isBot = true });
 
             UserInput.Clear();
         }
 
         private void ChatLog_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
-            
+
         }
 
         private string FormatMessage(string input)
@@ -95,32 +123,6 @@ namespace ChatbotFrontend
 
             formattedMessage.AppendLine(currentLine.Trim());
             return formattedMessage.ToString().TrimEnd();
-        }
-    }
-
-    public class ChatMessage
-    { 
-        public string Message {  get; set; }
-        public bool isBot {  get; set; }
-    }
-
-    public class BoolToBrushConverter : IValueConverter
-    {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            if (value is bool isBot)
-            {
-                var brushConverter = new BrushConverter();
-                return isBot
-                    ? (Brush)brushConverter.ConvertFromString("#FFFFB9D3") //Bot
-                    : (Brush)brushConverter.ConvertFromString("#FFFB90B7"); //User
-            }
-            return Brushes.Transparent;
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
         }
     }
 }
