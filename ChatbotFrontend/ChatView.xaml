@@ -17,16 +17,14 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <!-- Chat-Log -->
-        <ListBox x:Name="ChatLog" Margin="10,10,10,60" Background="#FFFDEBF7" BorderBrush="#FFFB90B7" BorderThickness="2"
-                 FontFamily="Segoe UI" FontSize="14" Foreground="Black" Grid.ColumnSpan="2" RenderTransformOrigin="0.679,0.581" SelectionChanged="ChatLog_SelectionChanged">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <Border Background="{Binding IsBot, Converter={StaticResource BoolToBrushConverter}}" Padding="10" CornerRadius="10" Margin="5">
-                        <TextBlock Text="{Binding Message}" TextWrapping="Wrap" MaxWidth="250"/>
-                    </Border>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+        <RichTextBox x:Name="ChatLog" Margin="10,10,10,60" Background="#FFFDEBF7" BorderBrush="#FFFB90B7" BorderThickness="2"
+             FontFamily="Segoe UI" FontSize="14" Foreground="Black" Grid.ColumnSpan="2" IsReadOnly="True" VerticalScrollBarVisibility="Auto">
+            <RichTextBox.Resources>
+                <Style TargetType="Paragraph">
+                    <Setter Property="Margin" Value="0,5,0,5"/>
+                </Style>
+            </RichTextBox.Resources>
+        </RichTextBox>
         <ScrollViewer VerticalScrollBarVisibility="Auto">
             <StackPanel x:Name="ChatContainer"/>
         </ScrollViewer>
@@ -39,14 +37,6 @@
                     FontWeight="Bold" BorderThickness="0" Click="SendMessage_Click" VerticalAlignment="Center"/>
         </StackPanel>
         <Image Height="100" Width="100"/>
-        <Image RenderTransformOrigin="1,1" Margin="10,208,104,192" Source="assets\buggyicon.ico"/>
-        <RichTextBox x:Name="BotBubble" Margin="105,222,45,206" Grid.ColumnSpan="2" TextChanged="RichTextBox_TextChanged" Background="#FFFB90B7" BorderBrush="#FFFB90B7">
-            <FlowDocument>
-            </FlowDocument>
-        </RichTextBox>
-        <RichTextBox x:Name="UserBubble" Margin="119,326,31,102" Grid.ColumnSpan="2" TextChanged="RichTextBox_TextChanged" Background="#FFFFCADE" BorderBrush="#FFFFCADE">
-            <FlowDocument>
-            </FlowDocument>
-        </RichTextBox>
+        <Image RenderTransformOrigin="1,1" Margin="84,33,30,367" Source="assets\buggyicon.ico" Grid.Column="1"/>
     </Grid>
 </Window>
