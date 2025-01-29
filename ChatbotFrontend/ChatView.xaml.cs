@@ -95,7 +95,25 @@ namespace ChatbotFrontend
 
             UserInput.Clear();
         }
+        
+        private void MessageInBox(string message)
+        {
+            ChatMessage chatMessage = new ChatMessage();
+            if (chatMessage.isBot)
+            {
 
+            }
+        }
+
+        private List<string> userInputs;
+        private List<string> botResponses;
+        private void GenerateTextbox()
+        {
+            foreach (string input in userInputs)
+            {
+
+            }
+        }
         private void ChatLog_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
 
@@ -124,5 +142,6 @@ namespace ChatbotFrontend
             formattedMessage.AppendLine(currentLine.Trim());
             return formattedMessage.ToString().TrimEnd();
         }
+           
     }
 }
