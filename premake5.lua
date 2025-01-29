@@ -32,6 +32,9 @@ project "ChatbotFrontend"
     linktimeoptimization "On"
     defines { "WINDOWS" }
 
+    -- Ensure the C++ backend builds first
+    dependson { "ChatbotCore" }
+
     postbuildcommands {
         -- Copy the C++ backend DLL to the C# output directory for dynamic linking
         "{COPY} %{wks.location}bin/%{cfg.buildcfg}/x64/ChatbotCore.dll %{wks.location}bin/%{cfg.buildcfg}/x64/net8.0-windows"
