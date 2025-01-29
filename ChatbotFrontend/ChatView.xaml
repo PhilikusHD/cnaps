@@ -27,7 +27,9 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <ScrollViewer Grid.ColumnSpan="2" Margin="10,10,10,60"/>
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <StackPanel x:Name="ChatContainer"/>
+        </ScrollViewer>
 
         <!-- Eingabefeld und Button -->
         <StackPanel x:Name="UserView" Orientation="Horizontal" VerticalAlignment="Bottom" Margin="10,0,10,10" Grid.ColumnSpan="2" Height="30">

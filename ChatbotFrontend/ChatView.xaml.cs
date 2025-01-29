@@ -107,13 +107,56 @@ namespace ChatbotFrontend
 
         private List<string> userInputs;
         private List<string> botResponses;
+
         private void GenerateTextbox()
         {
-            foreach (string input in userInputs)
-            {
+            // Letzten User-Input holen
+            string lastInput = userInputs.LastOrDefault();
+            if (string.IsNullOrWhiteSpace(lastInput)) return;
 
-            }
+            // User-Textbox erstellen
+            TextBox userTextBox = new TextBox
+            {
+                Text = lastInput,
+                Background = new SolidColorBrush(Color.FromRgb(255, 202, 222)), // User-Farbe
+               
+                BorderThickness = new Thickness(2),
+                Margin = new Thickness(119, 326, 31, 102),
+                IsReadOnly = true
+            };
+
+            // Zum StackPanel hinzufügen
+            ChatContainer.Children.Add(userTextBox);
+
+            // Simulierte Bot-Antwort nach kurzer Verzögerung
+            Task.Delay(1000).ContinueWith(_ =>
+            {
+                Dispatcher.Invoke(() =>
+                {
+                    string botResponse = "Ich bin ein Bot!";  // Hier könnte deine KI-Antwort sein
+                    botResponses.Add(botResponse);
+
+                    TextBox botTextBox = new TextBox
+                    {
+                        Text = botResponse,
+                        Background = new SolidColorBrush(Color.FromRgb(251, 144, 183)), // Bot-Farbe
+                        
+                        BorderThickness = new Thickness(2),
+                        Margin = new Thickness(105, 222, 45, 206),
+                        IsReadOnly = true
+                    };
+
+                    ChatContainer.Children.Add(botTextBox);
+                });
+            });
         }
+        //private void GenerateTextbox()
+        //{
+        //  foreach (string input in userInputs)
+        //{
+
+        //}
+        //}
         private void ChatLog_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
 
