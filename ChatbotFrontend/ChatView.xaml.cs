@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -35,6 +36,14 @@ namespace ChatbotFrontend
         [DllImport("ChatbotCore.dll", CallingConvention = CallingConvention.Cdecl)]
         private static extern IntPtr GetError();
 
+        string firstUserMessage;
+        public ChatView(string userInput)
+        {
+            InitializeComponent();
+            firstUserMessage = userInput;
+            ChatLog.Items.Add(firstUserMessage);
+        }
+
         public static string GenerateResponseString(string input)
         {
             IntPtr resultPtr = GenerateResponse(input);
@@ -48,22 +57,15 @@ namespace ChatbotFrontend
         }
 
 
-        string firstUserMessage;
-        string botResponse;
-        public ChatView(string userInput)
-        {
-            InitializeComponent();
-            firstUserMessage = userInput;
-            ChatLog.Items.Add(firstUserMessage);
-        }
-
         private void SendMessage_Click(object sender, RoutedEventArgs e)
         {
             string userInputText = FormatMessage(UserInput.Text);
             ChatLog.Items.Add(new ChatMessage { Message = FormatMessage(userInputText), isBot = false});
 
+            string botResponse = GenerateResponseString(userInputText);
+            ChatLog.Items.Add(new ChatMessage { Message = FormatMessage(botResponse), isBot = true});
 
-            
+            UserInput.Clear();
         }
 
         private void ChatLog_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
@@ -100,5 +102,25 @@ namespace ChatbotFrontend
     { 
         public string Message {  get; set; }
         public bool isBot {  get; set; }
+    }
+
+    public class BoolToBrushConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value is bool isBot)
+            {
+                var brushConverter = new BrushConverter();
+                return isBot
+                    ? (Brush)brushConverter.ConvertFromString("#FFFFB9D3") //Bot
+                    : (Brush)brushConverter.ConvertFromString("#FFFB90B7"); //User
+            }
+            return Brushes.Transparent;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
