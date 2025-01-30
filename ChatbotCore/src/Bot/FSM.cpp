@@ -44,6 +44,7 @@ State FiniteStateMachine::ProcessInput(const std::string& input)
 		}
 	}
 	Logger::Log("No valid transition found. Staying in current state: " + std::to_string(static_cast<int>(m_CurrentState)));
+	m_InState++;
 	return m_CurrentState;
 }
 

@@ -36,12 +36,20 @@ void ShutdownChatbot()
 const char* GenerateResponse(const char* input)
 {
 	fsm.ProcessInput(input);
-	std::string response = responseManager.GetResponse(fsm.GetCurrentState(), input, fsm.GetContext());
-	if (fsm.GetCurrentState() == State::Solution)
+	std::string response;
+	if (fsm.GetRemainedInState() >= 3)
 	{
-		response += "\n" + responseManager.GenerateSolutionResponse(fsm.GetContext());
+		response = "I am unable to fully understand the issue. Please contact human support at: support@bugland.com";
 	}
-	fsm.ResetContext();
+	else
+	{
+		response = responseManager.GetResponse(fsm.GetCurrentState(), input, fsm.GetContext());
+		if (fsm.GetCurrentState() == State::Solution)
+		{
+			response += "\n" + responseManager.GenerateSolutionResponse(fsm.GetContext());
+		}
+		fsm.ResetContext();
+	}
 
 	// Dynamically allocate memory for the response
 	char* result = new char[response.size() + 1]; // +1 for null terminator
