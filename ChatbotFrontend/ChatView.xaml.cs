@@ -90,7 +90,13 @@ namespace ChatbotFrontend
             return Marshal.PtrToStringAnsi(GetError());
         }
 
+
         private void SendMessage_Click(object sender, RoutedEventArgs e)
+        {
+            SendMessage();
+        }
+
+        private void SendMessage()
         {
             string userInputText = UserInput.Text;
             if (!string.IsNullOrWhiteSpace(userInputText))
@@ -101,6 +107,7 @@ namespace ChatbotFrontend
                 UserInput.Clear();
             }
         }
+
 
         private void AddMessageToChatLog(string message, bool isBot)
         {
@@ -170,6 +177,17 @@ namespace ChatbotFrontend
             else
             {
                 UserInput.Height = 30;
+            }
+        }
+        private void UserInput_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter && Keyboard.Modifiers != ModifierKeys.Shift)
+            {
+                // Verhindere, dass ein Zeilenumbruch in der TextBox hinzugefügt wird
+                e.Handled = true;
+
+                // Sende die Nachricht
+                SendMessage();
             }
         }
     }

@@ -45,7 +45,13 @@ namespace ChatbotFrontend
             this.Close();
         }
 
+
         private void SendMessage_Click(object sender, RoutedEventArgs e)
+        {
+            SendMessage();
+        }
+
+        private void SendMessage()
         {
             WelcomeImage.Visibility = Visibility.Collapsed;
 
@@ -62,7 +68,7 @@ namespace ChatbotFrontend
 
         }
 
-        private void UserInput_TextChanged(object sender, EventArgs e)
+        private void UserInput_TextChanged(object sender, TextChangedEventArgs e)
         {
             int lineCount = UserInput.LineCount;
 
@@ -75,18 +81,16 @@ namespace ChatbotFrontend
                 UserInput.Height = 30;
             }
         }
-        //private void UserInput_KeyDown(object sender, KeyEventArgs e)
-        //{
-          
-          //  if (e.Key == Key.Enter && e.Key == Key.LeftShift)
-            //{
-              //  WelcomeImage.Visibility = Visibility.Collapsed;
-              //
-                //string userMessage = UserInput.Text;
-                //ShowChatView(userMessage);
-                //e.Handled = true;
-                
-            //}
-        //}
+        private void UserInput_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter && Keyboard.Modifiers != ModifierKeys.Shift)
+            {
+                // Verhindere, dass ein Zeilenumbruch in der TextBox hinzugefügt wird
+                e.Handled = true;
+
+                // Sende die Nachricht
+                SendMessage();
+            }
+        }
     }
 }
