@@ -20,21 +20,23 @@
         <!-- Chat-Log -->
         <ListBox x:Name="ChatLog" Grid.Row="0" Margin="10" Background="#FFFDEBF7" BorderBrush="#FFFB90B7" BorderThickness="2"
                  FontFamily="Segoe UI" FontSize="14" Foreground="Black"/>
-
+        
         <!-- Willkommensbild und Overlay -->
         <Image x:Name="WelcomeImage" Grid.Row="0" Margin="104,225,104,76" Source="assets\buggywelcome.png"/>
         <Border Grid.Row="0" BorderThickness="2" Margin="114,170,118,214" CornerRadius="30" Background="#FFFFCADE"/>
         <TextBlock Grid.Row="0" TextWrapping="Wrap" Margin="0,181,0,0" FontFamily="Microsoft JhengHei" 
                    VerticalAlignment="Top" HorizontalAlignment="Center" TextAlignment="Center" FontWeight="Bold"
                    Text="How can I help you today?"/>
+        
 
         <!-- Eingabefeld und Button (am Ende des Grids, um Überlappung zu vermeiden) -->
         <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="10,0,10,10" VerticalAlignment="Bottom">
             <TextBox x:Name="UserInput" Width="401" Height="30" Background="#FFFDEBF7" 
-                     BorderBrush="#FFFB90B7" BorderThickness="2" FontFamily="Segoe UI" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" TextChanged="UserInput_TextChanged"/>
+                     BorderBrush="#FFFB90B7" BorderThickness="2" FontFamily="Segoe UI" AcceptsReturn="True"
+                     TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" TextChanged="UserInput_TextChanged"/>
             <Button Content="Send" Width="58" Height="30" Margin="10,0,0,0" Background="#FFFB90B7" 
                     Foreground="White" FontWeight="Bold" BorderThickness="0" Click="SendMessage_Click"/>
         </StackPanel>
-        <ContentControl x:Name="ContentArea"/>
+        <ContentControl x:Name="ContentArea" Margin="34,20,-34,20" Grid.RowSpan="2"/>
     </Grid>
 </Window>

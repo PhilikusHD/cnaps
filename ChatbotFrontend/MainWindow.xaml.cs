@@ -75,5 +75,18 @@ namespace ChatbotFrontend
                 UserInput.Height = 30;
             }
         }
+        //private void UserInput_KeyDown(object sender, KeyEventArgs e)
+        //{
+          
+          //  if (e.Key == Key.Enter && e.Key == Key.LeftShift)
+            //{
+              //  WelcomeImage.Visibility = Visibility.Collapsed;
+              //
+                //string userMessage = UserInput.Text;
+                //ShowChatView(userMessage);
+                //e.Handled = true;
+                
+            //}
+        //}
     }
 }
