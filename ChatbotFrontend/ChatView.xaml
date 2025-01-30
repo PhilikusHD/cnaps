@@ -11,6 +11,24 @@
 
     <Window.Resources>
         <local:BoolToBrushConverter x:Key="BoolToBrushConverter"/>
+        <Style TargetType="{x:Type ScrollBar}">
+            <Setter Property="Width" Value="10"/>
+            <Setter Property="Background" Value="LightPink"/>
+            <Setter Property="Foreground" Value="#FFFB90B7"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ScrollBar}">
+                        <Grid Background="LightPink">
+                            <Track Name="PART_Track" IsDirectionReversed="true">
+                                <Track.Thumb>
+                                    <Thumb Background="#FFFB90B7" BorderBrush="HotPink"/>
+                                </Track.Thumb>
+                            </Track>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Window.Resources>
     <Grid Height="484" VerticalAlignment="Bottom">
         <Grid.ColumnDefinitions>
@@ -27,6 +45,12 @@
             </RichTextBox.Resources>
         </RichTextBox>
         <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <ScrollViewer.Resources>
+                <Style TargetType="ScrollBar">
+                    <Setter Property="Background" Value="LightPink"/>
+                    <Setter Property="Foreground" Value="#FFFB90B7"/>
+                </Style>
+            </ScrollViewer.Resources>
             <StackPanel x:Name="ChatContainer"/>
         </ScrollViewer>
 
