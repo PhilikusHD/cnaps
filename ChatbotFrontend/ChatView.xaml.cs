@@ -13,6 +13,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Xml;
 
 namespace ChatbotFrontend
 {
@@ -75,6 +76,10 @@ namespace ChatbotFrontend
 
         public static string GenerateResponseString(string input)
         {
+            if (string.IsNullOrWhiteSpace(input))
+            {
+                return "Please type something in!";
+            }
             IntPtr resultPtr = GenerateResponse(input);
             string result = Marshal.PtrToStringAnsi(resultPtr);
             FreeResponse(resultPtr);
@@ -127,9 +132,45 @@ namespace ChatbotFrontend
             // Scrollen zum Ende des Chat-Logs
             ChatLog.ScrollToEnd();
         }
-            private void RichTextBox_TextChanged (object sender, EventArgs e)
+        private void RichTextBox_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private string FormatMessage(string input)
+        {
+            int maxLength = 20;
+            string[] words = input.Split(' ');
+            StringBuilder formattedMessage = new StringBuilder();
+            string currentLine = "";
+            foreach (string word in words)
+            {
+                if ((currentLine + word).Length > maxLength)
+                {
+                    formattedMessage.AppendLine(currentLine.Trim());
+                    currentLine = word + " ";
+                }
+                else
+                {
+                    currentLine += word + " ";
+                }
+            }
+            formattedMessage.AppendLine(currentLine.Trim());
+            return formattedMessage.ToString().TrimEnd();
+        }
+
+        private void UserInput_TextChanged(object sender, EventArgs e)
+        {
+            int lineCount = UserInput.LineCount;
+
+            if (lineCount > 1)
+            {
+                UserInput.Height = UserInput.FontSize * lineCount + 10;
+            }
+            else
+            {
+                UserInput.Height = 30;
+            }
         }
     }
 }

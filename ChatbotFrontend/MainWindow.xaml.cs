@@ -62,5 +62,18 @@ namespace ChatbotFrontend
 
         }
 
+        private void UserInput_TextChanged(object sender, EventArgs e)
+        {
+            int lineCount = UserInput.LineCount;
+
+            if (lineCount > 1)
+            {
+                UserInput.Height = UserInput.FontSize * lineCount + 10;
+            }
+            else
+            {
+                UserInput.Height = 30;
+            }
+        }
     }
 }
