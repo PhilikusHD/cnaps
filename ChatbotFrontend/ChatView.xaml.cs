@@ -69,6 +69,8 @@ namespace ChatbotFrontend
             InitializeComponent();
             firstUserMessage = userInput;
             AddMessageToChatLog(firstUserMessage, false);
+            string botResponse = GenerateResponseString(firstUserMessage);
+            AddMessageToChatLog(botResponse, true);
         }
 
         public static string GenerateResponseString(string input)
