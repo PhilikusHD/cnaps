@@ -24,7 +24,7 @@
         <!-- Willkommensbild und Overlay -->
         <Image x:Name="WelcomeImage" Grid.Row="0" Margin="104,225,104,76" Source="assets\buggywelcome.png"/>
         <Border Grid.Row="0" BorderThickness="2" Margin="114,170,118,214" CornerRadius="30" Background="#FFFFCADE"/>
-        <TextBlock Grid.Row="0" TextWrapping="Wrap" Margin="0,181,0,0" FontFamily="Microsoft JhengHei" 
+        <TextBlock x:Name="WelcomeText" Grid.Row="0" TextWrapping="Wrap" Margin="0,181,0,0" FontFamily="Microsoft JhengHei" 
                    VerticalAlignment="Top" HorizontalAlignment="Center" TextAlignment="Center" FontWeight="Bold"
                    Text="How can I help you today?"/>
 

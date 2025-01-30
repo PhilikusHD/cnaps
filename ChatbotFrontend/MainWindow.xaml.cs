@@ -6,6 +6,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Automation.Provider;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
@@ -35,6 +36,11 @@ namespace ChatbotFrontend
         {
             InitializeComponent();
             InitializeChatbot();
+
+            IntPtr responsePtr = GenerateResponse("hello");
+            string botResponse = Marshal.PtrToStringAnsi(responsePtr);
+
+            WelcomeText.Text = botResponse;
         }
 
 
