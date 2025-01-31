@@ -29,10 +29,9 @@
                 HorizontalAlignment="Center">
                 <TextBlock x:Name="WelcomeText"
                        TextWrapping="Wrap"
-                       FontFamily="Microsoft JhengHei"
                        TextAlignment="Center"
                        FontWeight="Bold"
-                       FontSize="14"/>
+                       FontSize="16"/>
             </Border>
         </StackPanel>
 
@@ -44,7 +43,7 @@
                      TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" TextChanged="UserInput_TextChanged"
                      KeyDown="UserInput_KeyDown"/>
             <Button Content="Send" Width="58" Height="30" Margin="10,0,0,0" Background="#FFFB90B7" 
-                    Foreground="White" FontWeight="Bold" BorderThickness="0" Click="SendMessage_Click"/>
+                    Foreground="Black" FontWeight="Bold" BorderThickness="0" Click="SendMessage_Click" FontSize="14"/>
         </StackPanel>
         <ContentControl x:Name="ContentArea" Margin="34,20,-34,20" Grid.RowSpan="2"/>
     </Grid>

@@ -60,8 +60,8 @@
             <TextBox x:Name="UserInput" Width="399" Height="30" Background="#FFFDEBF7" Foreground="#FF333333"
                      BorderBrush="#FFFB90B7" BorderThickness="2" FontFamily="Segoe UI" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" TextChanged="UserInput_TextChanged"
                      KeyDown="UserInput_KeyDown"/>
-            <Button x:Name="SendButton" Content="Send" Width="57" Height="30" Margin="10,0,0,0" Background="#FFFB90B7" Foreground="White"
-                    FontWeight="Bold" BorderThickness="0" Click="SendMessage_Click" VerticalAlignment="Center"/>
+            <Button x:Name="SendButton" Content="Send" Width="60" Height="30" Margin="10,0,0,0" Background="#FFFB90B7" Foreground="Black"
+                    FontWeight="Bold" BorderThickness="0" Click="SendMessage_Click" VerticalAlignment="Center" FontSize="14"/>
         </StackPanel>
         <Image Height="100" Width="100"/>
         <Image RenderTransformOrigin="1,1" Margin="-4,35,143,386" Source="assets\buggyicon.ico"/>
