@@ -40,6 +40,7 @@ State FiniteStateMachine::ProcessInput(const std::string& input)
 			Logger::Log("Transitioning to state: " + std::to_string(static_cast<int>(nextState)));
 			Transition(nextState);
 			m_Context = context;
+			m_InState = 0;
 			return m_CurrentState;
 		}
 	}

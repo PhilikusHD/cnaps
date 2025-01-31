@@ -27,7 +27,7 @@ private:
 private:
 	State m_CurrentState;
 	std::string m_Context;
-	Raven::uint8 m_InState;
+	Raven::uint8 m_InState = 0;
 	std::unordered_map<State, std::vector<State>> m_Transitions;
 	std::unordered_map<State, std::vector<std::string>> m_Keywords;
 };

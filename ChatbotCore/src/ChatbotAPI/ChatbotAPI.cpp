@@ -37,7 +37,7 @@ const char* GenerateResponse(const char* input)
 {
 	fsm.ProcessInput(input);
 	std::string response;
-	if (fsm.GetRemainedInState() >= 3)
+	if (fsm.GetRemainedInState() > 3)
 	{
 		response = "I am unable to fully understand the issue. Please contact human support at: support@bugland.com";
 	}
