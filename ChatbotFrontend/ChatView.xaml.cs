@@ -144,6 +144,12 @@ namespace ChatbotFrontend
 
         }
 
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        { 
+            UserInput.Focus();
+            UserInput.SelectAll();
+        }
+
         private string FormatMessage(string input)
         {
             int maxLength = 20;

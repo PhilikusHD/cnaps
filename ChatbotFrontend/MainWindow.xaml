@@ -2,7 +2,8 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:ChatbotFrontend"
-        Title="BUGLAND Support" Height="500" Width="500" Background="#FFE6E6FA" ResizeMode="NoResize">
+        Title="BUGLAND Support" Height="500" Width="500" Background="#FFE6E6FA" ResizeMode="NoResize"
+        Loaded="MainLoaded">
     <Window.Icon>
         <BitmapImage UriSource="assets\buggyicon.ico"/>
     </Window.Icon>
@@ -22,11 +23,18 @@
                  FontFamily="Segoe UI" FontSize="14" Foreground="Black"/>
 
         <!-- Willkommensbild und Overlay -->
-        <Image x:Name="WelcomeImage" Grid.Row="0" Margin="104,225,104,76" Source="assets\buggywelcome.png"/>
-        <Border Grid.Row="0" BorderThickness="2" Margin="114,170,118,214" CornerRadius="30" Background="#FFFFCADE"/>
-        <TextBlock x:Name="WelcomeText" Grid.Row="0" TextWrapping="Wrap" Margin="0,181,0,0" FontFamily="Microsoft JhengHei" 
-                   VerticalAlignment="Top" HorizontalAlignment="Center" TextAlignment="Center" FontWeight="Bold"
-                   Text="How can I help you today?"/>
+        <Image x:Name="WelcomeImage" Grid.Row="0" Margin="104,245,104,56" Source="assets\buggywelcome.png"/>
+        <StackPanel Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,170,0,0">
+            <Border BorderThickness="2" CornerRadius="30" Background="#FFFFCADE" Padding="15"
+                HorizontalAlignment="Center">
+                <TextBlock x:Name="WelcomeText"
+                       TextWrapping="Wrap"
+                       FontFamily="Microsoft JhengHei"
+                       TextAlignment="Center"
+                       FontWeight="Bold"
+                       FontSize="14"/>
+            </Border>
+        </StackPanel>
 
 
         <!-- Eingabefeld und Button (am Ende des Grids, um Überlappung zu vermeiden) -->

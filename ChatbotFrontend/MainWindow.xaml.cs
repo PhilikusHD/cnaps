@@ -57,6 +57,12 @@ namespace ChatbotFrontend
             SendMessage();
         }
 
+        private void MainLoaded(object sender, RoutedEventArgs e) 
+        {
+            UserInput.Focus();
+            UserInput.SelectAll();
+        }
+
         private void SendMessage()
         {
             WelcomeImage.Visibility = Visibility.Collapsed;

@@ -2,7 +2,8 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:ChatbotFrontend"
-        Height="500" Width="500" Background="#FFE6E6FA" ResizeMode="NoResize">
+        Height="500" Width="500" Background="#FFE6E6FA" ResizeMode="NoResize"
+        Loaded="Window_Loaded">
 
 
     <Window.Icon>
