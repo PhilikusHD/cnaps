@@ -26,8 +26,8 @@ State FiniteStateMachine::ProcessInput(const std::string& input)
 	Preprocessor::PreprocessInput(const_cast<std::string&>(input));
 	Logger::Log("Preprocessing complete. Cleaned input: '" + input + "'");
 
-	std::string context = ExtractContext(input);
-	Logger::Log("Extracted Context: " + context);
+	m_Context = ExtractContext(input);
+	Logger::Log("Extracted Context: " + m_Context);
 
 	// Iterate over all possible transitions from the current state
 	for (const auto& nextState : m_Transitions[m_CurrentState])
@@ -39,7 +39,6 @@ State FiniteStateMachine::ProcessInput(const std::string& input)
 		{
 			Logger::Log("Transitioning to state: " + std::to_string(static_cast<int>(nextState)));
 			Transition(nextState);
-			m_Context = context;
 			m_InState = 0;
 			return m_CurrentState;
 		}

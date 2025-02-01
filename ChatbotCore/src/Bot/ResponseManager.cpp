@@ -33,6 +33,20 @@ std::string ResponseManager::GenerateSolutionResponse(const std::string& context
 	std::vector<std::string> entities = SplitContext(context);
 	std::string response;
 
+	// Step 1.5: Did we even have a context here, user may be dum dum and not give the product
+	if (entities.empty())
+	{
+		std::vector<std::string> solutionSteps = GetSolutionSteps(ContextCategory::Default);
+		// Add the solution steps to the response
+		response += "I was unable to fully get which product you are having troubles with. However, do try the following steps : \n";
+		for (const auto& step : solutionSteps)
+		{
+			response += "- " + step + "\n";
+		}
+		response += "\n"; // Add a newline between each entity's solution
+		return response;
+	}
+
 	// Step 2: Categorize entities and generate a response
 	for (const auto& entity : entities)
 	{

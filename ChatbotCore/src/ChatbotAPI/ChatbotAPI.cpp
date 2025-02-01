@@ -47,8 +47,8 @@ const char* GenerateResponse(const char* input)
 		if (fsm.GetCurrentState() == State::Solution)
 		{
 			response += "\n" + responseManager.GenerateSolutionResponse(fsm.GetContext());
+			fsm.ResetContext();
 		}
-		fsm.ResetContext();
 	}
 
 	// Dynamically allocate memory for the response
