@@ -1,6 +1,5 @@
 #include "FSM.h"
 #include "shared/Logger.h"
-#include "shared/Memory/Scope.h"
 #include "Bot/Preprocessor.h"
 #include "Bot/ContextExtractor.h"
 
