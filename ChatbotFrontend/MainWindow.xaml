@@ -7,9 +7,6 @@
     <Window.Icon>
         <BitmapImage UriSource="assets\buggyicon.ico"/>
     </Window.Icon>
-    <Window.Resources>
-        <local:BoolToBrushConverter x:Key="BoolToBrushConverter"/>
-    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>

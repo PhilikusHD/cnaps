@@ -22,32 +22,6 @@ namespace ChatbotFrontend
     /// </summary>
     /// 
 
-    public class ChatMessage
-    {
-        public string Message { get; set; }
-        public bool isBot { get; set; }
-    }
-
-    public class BoolToBrushConverter : IValueConverter
-    {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            if (value is bool isBot)
-            {
-                var brushConverter = new BrushConverter();
-                return isBot
-                    ? (Brush)brushConverter.ConvertFromString("#FFFFB9D3") //Bot
-                    : (Brush)brushConverter.ConvertFromString("#FFFB90B7"); //User
-            }
-            return Brushes.Transparent;
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
-    }
-
     public partial class ChatView : Window
     {
         [DllImport("ChatbotCore.dll", CallingConvention = CallingConvention.Cdecl)]
@@ -145,31 +119,9 @@ namespace ChatbotFrontend
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
-        { 
+        {
             UserInput.Focus();
             UserInput.SelectAll();
-        }
-
-        private string FormatMessage(string input)
-        {
-            int maxLength = 20;
-            string[] words = input.Split(' ');
-            StringBuilder formattedMessage = new StringBuilder();
-            string currentLine = "";
-            foreach (string word in words)
-            {
-                if ((currentLine + word).Length > maxLength)
-                {
-                    formattedMessage.AppendLine(currentLine.Trim());
-                    currentLine = word + " ";
-                }
-                else
-                {
-                    currentLine += word + " ";
-                }
-            }
-            formattedMessage.AppendLine(currentLine.Trim());
-            return formattedMessage.ToString().TrimEnd();
         }
 
         private void UserInput_TextChanged(object sender, EventArgs e)
