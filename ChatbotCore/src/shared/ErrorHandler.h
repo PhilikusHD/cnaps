@@ -20,7 +20,7 @@ public:
 
 	static const std::map<ErrorCode, std::string> errorMessages;
 
-	static void logError(ErrorCode code);
+	static void LogError(ErrorCode code);
 
-	static ErrorCode handleCriticalError(ErrorCode code);
+	static ErrorCode HandleCriticalError(ErrorCode code);
 };

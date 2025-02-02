@@ -2,7 +2,7 @@
 
 const std::map<ErrorCode, std::string> errorMessages;
 
-void ErrorHandler::logError(ErrorCode code)
+void ErrorHandler::LogError(ErrorCode code)
 {
 	auto iterator = errorMessages.find(code);
 	if (iterator != errorMessages.end())
@@ -15,9 +15,9 @@ void ErrorHandler::logError(ErrorCode code)
 	}
 }
 
-ErrorCode ErrorHandler::handleCriticalError(ErrorCode code)
+ErrorCode ErrorHandler::HandleCriticalError(ErrorCode code)
 {
-	logError(code);
+	LogError(code);
 	return code;
 }
 const std::map<ErrorCode, std::string> ErrorHandler::errorMessages =

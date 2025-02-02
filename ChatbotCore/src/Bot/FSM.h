@@ -22,7 +22,6 @@ private:
 	std::string ExtractContext(const std::string& input);
 	void Transition(State newState);
 	bool CanTransition(State newState) const;
-	bool StateMatchesKeyword(State state, const std::string& keyword) const;
 	void AddWords();
 private:
 	State m_CurrentState;

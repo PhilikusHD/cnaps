@@ -97,13 +97,6 @@ bool FiniteStateMachine::CanTransition(State newState) const
 	return it != m_Transitions.end() && std::find(it->second.begin(), it->second.end(), newState) != it->second.end();
 }
 
-bool FiniteStateMachine::StateMatchesKeyword(State state, const std::string& keyword) const
-{
-	auto it = m_Keywords.find(state);
-	return it != m_Keywords.end() &&
-		std::find(it->second.begin(), it->second.end(), keyword) != it->second.end();
-}
-
 void FiniteStateMachine::AddWords()
 {
 	// Greeting state (State 0)

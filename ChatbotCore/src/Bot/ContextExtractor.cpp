@@ -46,7 +46,6 @@ std::string ContextExtractor::ExtractContext(const std::string& input)
 	return "";
 }
 
-
 std::string ContextExtractor::BuildContextString(const std::unordered_map<ContextCategory, std::string>& entities)
 {
 	std::vector<std::string> contextList;

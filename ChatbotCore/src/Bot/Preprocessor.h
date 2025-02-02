@@ -34,7 +34,7 @@ namespace Preprocessor
 		{
 			std::string stemmed = word;
 
-			// Naive stemming example (strip common suffixes)
+			// Naive stemming (strip common suffixes)
 			if (stemmed.size() > 4)
 			{
 				if (stemmed.substr(stemmed.size() - 3) == "ing")
