@@ -28,11 +28,6 @@ void InitializeChatbot()
 	fsm.AddTransition(State::Escalation, State::Goodbye);
 }
 
-void ShutdownChatbot()
-{
-	// Not implemented
-}
-
 const char* GenerateResponse(const char* input)
 {
 	fsm.ProcessInput(input);
@@ -58,17 +53,6 @@ const char* GenerateResponse(const char* input)
 	return result;
 }
 
-const bool GetStatus()
-{
-	// Not implemented
-	return false;
-}
-
-const char* GetError()
-{
-	// Not implemented
-	return "";
-}
 
 void FreeResponse(char* response)
 {

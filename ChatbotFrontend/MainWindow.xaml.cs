@@ -29,9 +29,6 @@ namespace ChatbotFrontend
         [DllImport("ChatbotCore.dll", CallingConvention = CallingConvention.Cdecl)]
         private static extern IntPtr GenerateResponse([MarshalAs(UnmanagedType.LPStr)] string input);
 
-        [DllImport("ChatbotCore.dll", CallingConvention = CallingConvention.Cdecl)]
-        private static extern IntPtr GetError();
-
         public MainWindow()
         {
             InitializeComponent();
@@ -57,7 +54,7 @@ namespace ChatbotFrontend
             SendMessage();
         }
 
-        private void MainLoaded(object sender, RoutedEventArgs e) 
+        private void MainLoaded(object sender, RoutedEventArgs e)
         {
             UserInput.Focus();
             UserInput.SelectAll();
