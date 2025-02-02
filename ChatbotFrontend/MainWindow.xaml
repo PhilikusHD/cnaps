@@ -42,6 +42,5 @@
             <Button Content="Send" Width="58" Height="30" Margin="10,0,0,0" Background="#FFFB90B7" 
                     Foreground="Black" FontWeight="Bold" BorderThickness="0" Click="SendMessage_Click" FontSize="14"/>
         </StackPanel>
-        <ContentControl x:Name="ContentArea" Margin="34,20,-34,20" Grid.RowSpan="2"/>
     </Grid>
 </Window>
